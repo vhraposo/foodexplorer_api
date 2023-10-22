@@ -37,8 +37,8 @@ class UsersController {
       throw new AppError('Email address already used.')
     }
 
-    user.name = name
-    user.email = email
+    user.name = name ?? user.name
+    user.email = email ?? user.email
 
     if(password && !old_password){
       throw new AppError('You need to inform the old password to set a new password.')
