@@ -30,6 +30,18 @@ class DishesController {
       response.status(500).json({ error: 'Erro interno do servidor' });
     }
   }
+
+  async show(request, response){
+    const { id } = request.params
+
+    const dish = await knex('dishes').where({ id }).first()
+    const ingredients = await knex('ingredients').where({ dish_id: id}).orderBy('name')
+
+    return response.json({
+        ...dish,
+        ingredients
+    })
+  }
 }
 
 module.exports = DishesController;

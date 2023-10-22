@@ -5,7 +5,9 @@ const DishesController = require('../controllers/DishesController')
 
 const dishesController = new DishesController()
 
-dishesRoutes.post('/', dishesController.create)
+dishesRoutes.post('/:user_id', dishesController.create)
+dishesRoutes.get('/:id', dishesController.show)
+
 
 
 
