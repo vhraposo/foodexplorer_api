@@ -59,15 +59,33 @@ class DishesController {
     return response.json()
   }
 
-  async index(request, response){
-    const { category } = request.query
+  async index(request, response) {
+    const { category, search } = request.query;
+    let dishes;
 
-    const dishes = await knex('dishes')
-    .orderBy('name')
-    .whereLike('category', `%${category}%`)
+    if (search) {
+      dishes = await knex('dishes')
+        .where(function() {
+          this.where('name', 'like', `%${search}%`)
+            .orWhereExists(function() {
+              this.select('dish_id')
+                .from('ingredients')
+                .whereRaw('dishes.id = ingredients.dish_id')
+                .andWhere('name', 'like', `%${search}%`);
+            });
+        })
+        .orderBy('name');
+    } else if (category) {
+      dishes = await knex('dishes')
+        .where('category', 'like', `%${category}%`)
+        .orderBy('name');
+    } else {
+      dishes = await knex('dishes').orderBy('name');
+    }
 
-    return response.json(dishes)
+    return response.json(dishes);
   }
+  
 }
 
 module.exports = DishesController;
