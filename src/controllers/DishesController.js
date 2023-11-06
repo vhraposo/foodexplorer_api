@@ -23,7 +23,7 @@ class DishesController {
 
       await knex('ingredients').insert(ingredientsInsert)
 
-      response.status(201).json({ dish_id })
+      return response.status(201).json({ dish_id })
 
     } catch (error) {
       console.error(error);
