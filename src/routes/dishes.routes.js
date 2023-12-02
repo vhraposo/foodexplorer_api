@@ -6,12 +6,12 @@ const ensureAuthenticated = require("../middlewares/ensureAuthenticated")
 
 const dishesController = new DishesController()
 
-dishesRoutes.use(ensureAuthenticated)
 
-dishesRoutes.post('/:user_id', dishesController.create)
+
+dishesRoutes.post('/:user_id', ensureAuthenticated, dishesController.create)
 dishesRoutes.get('/', dishesController.index)
-dishesRoutes.get('/:id', dishesController.show)
-dishesRoutes.delete('/:id', dishesController.delete)
+dishesRoutes.get('/:id', ensureAuthenticated, dishesController.show)
+dishesRoutes.delete('/:id', ensureAuthenticated, dishesController.delete)
 
 
 module.exports = dishesRoutes
