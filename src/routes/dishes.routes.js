@@ -8,7 +8,7 @@ const dishesController = new DishesController()
 
 
 
-dishesRoutes.post('/:user_id', ensureAuthenticated, dishesController.create)
+dishesRoutes.post('/', ensureAuthenticated, dishesController.create)
 dishesRoutes.get('/', dishesController.index)
 dishesRoutes.get('/:id', ensureAuthenticated, dishesController.show)
 dishesRoutes.delete('/:id', ensureAuthenticated, dishesController.delete)
