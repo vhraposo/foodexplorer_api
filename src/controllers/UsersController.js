@@ -1,5 +1,6 @@
 const { hash, compare } = require('bcryptjs')
 const AppError = require('../utils/AppError')
+const knex = require('../database/knex')
 
 const sqliteConnection = require('../database/sqlite')
 
@@ -55,6 +56,19 @@ class UsersController {
 
     await database.run(`UPDATE users SET name = ?, email = ?, password = ?, updated_at = ? WHERE id = ?`, [user.name, user.email, user.password, new Date(), user_id])
     return response.json()
+  }
+
+  async show(request, response){
+    const { id } = request.params
+    const user = await knex('users').where({ id }).first()
+
+    if(!user){
+      return response.status(404).json({error: 'User not found'})
+    }
+    return response.json({
+        ...user
+       
+    })
   }
 }
 
