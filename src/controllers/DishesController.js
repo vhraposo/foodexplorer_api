@@ -84,6 +84,39 @@ class DishesController {
     }
     return response.json(dishes)
   }
+
+  async update(request, response) {
+    const { id } = request.params;
+    const { name, description, price, image, category, ingredients } = request.body;
+  
+    try {
+      await knex('dishes')
+        .where('id', id)
+        .update({
+          name,
+          description,
+          image,
+          price,
+          category,
+        });
+  
+      await knex('ingredients').where('dish_id', id).del();
+  
+      const ingredientsInsert = ingredients.map((ingredientName) => {
+        return {
+          dish_id: id,
+          name: ingredientName,
+        };
+      });
+  
+      await knex('ingredients').insert(ingredientsInsert);
+  
+      return response.status(200).json({ message: 'Dish updated successfully' });
+    } catch (error) {
+      console.error(error);
+      response.status(500).json({ error: 'Internal server error' });
+    }
+  }
   
 }
 
