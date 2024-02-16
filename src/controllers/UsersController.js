@@ -22,7 +22,7 @@ class UsersController {
   }
 
   async update(request, response){
-    const { name, email, password, old_password } = request.body
+    const { name, email, avatar, password, old_password } = request.body
     const user_id = request.user.id
 
     const database = await sqliteConnection()
@@ -40,6 +40,7 @@ class UsersController {
 
     user.name = name ?? user.name
     user.email = email ?? user.email
+    user.avatar = avatar ?? user.avatar
 
     if(password && !old_password){
       throw new AppError('You need to inform the old password to set a new password.')
@@ -54,7 +55,7 @@ class UsersController {
       user.password = await hash(password, 8)
     }
 
-    await database.run(`UPDATE users SET name = ?, email = ?, password = ?, updated_at = ? WHERE id = ?`, [user.name, user.email, user.password, new Date(), user_id])
+    await database.run(`UPDATE users SET name = ?, email = ?, password = ?, avatar = ?, updated_at = ? WHERE id = ?`, [user.name, user.email, user.password, user.avatar, new Date(), user_id])
     return response.json()
   }
 
