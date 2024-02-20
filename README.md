@@ -31,8 +31,8 @@
 - [**bcryptjs**](https://www.npmjs.com/package/bcryptjs)
 - [**body-parser**](https://www.npmjs.com/package/body-parser)
 - [**cors**](https://www.npmjs.com/package/cors)
-- [**cors**](https://www.npmjs.com/package/express)
-- [**cors**](https://www.npmjs.com/package/express-async-errors)
+- [**express**](https://www.npmjs.com/package/express)
+- [**express-async-errors**](https://www.npmjs.com/package/express-async-errors)
 - [**jsonwebtoken**](https://www.npmjs.com/package/jsonwebtoken)
 - [**knex**](https://www.npmjs.com/package/knex)
 - [**multer**](https://www.npmjs.com/package/multer)
@@ -70,6 +70,134 @@ Rode as migrates:
 npm run migrate ou yarn migrate
 ``````
 
+<h2 id="routes">🗺️ Rotas</h2>
+
+### /user
+
+create
+```json
+{
+  "name": "Jhon Doe",
+  "email": "jhondoe@gmail.com",
+  "password": "123456"
+}
+```
+
+#### está rota precisa do token
+update
+```json
+{
+  "name":"Jhon Doe",
+  "email": "jhondoe@gmail.com",
+  "password":"1234567",
+}
+```
+
+show
+```json
+retorno da API
+{
+  "name": "Jhon Doe",
+  "email": "jhondoe@gmail.com",
+  "avatar": "https://github.com/vhraposo.png",
+}
+```
+
+### /dishes
+#### todas as rotas menos o index precisam do token
+
+create
+```json
+{
+  "name": "Negroni",
+  "description": "Um coquetel clássico e amargo, feito com gim, Campari e vermute doce.",
+  "price": 35.00,
+  "image": "https://www.guiadrinks.com.br/wp-content/uploads/2020/08/Negroni-768x512.jpg",
+  "category": "Bebidas",
+  "ingredients": ["Gim", "Campari", "Vermute doce"],
+}
+```
+
+index | retorna todos os pratos
+```json
+retorno da API
+{
+  "id": 1,
+  "name": "Negroni",
+  "description": "Um coquetel clássico e amargo, feito com gim, Campari e vermute doce.",
+  "price": 35.00,
+  "image": "https://www.guiadrinks.com.br/wp-content/uploads/2020/08/Negroni-768x512.jpg",
+  "category": "Bebidas",
+  "ingredients": ["Gim", "Campari", "Vermute doce"],
+}
+```
+
+update | nessa e nas proximas rotas é necessario passar o id do prato como por exemplo **json dishes/1**
+```json
+{
+  "name": "Negroni 2.0",
+  "description": "Um coquetel clássico e amargo, feito com gim, Campari e vermute doce.",
+  "price": 55.00,
+  "image": "https://www.guiadrinks.com.br/wp-content/uploads/2020/08/Negroni-768x512.jpg",
+  "category": "Bebidas",
+  "ingredients": ["Gim", "Campari", "Vermute doce, framboesa"],
+}
+```
+
+show | nessa e nas proximas rotas é necessario passar o id do prato como por exemplo **json dishes/1**
+Retorna o prato específico, baseado no ID
+
+```json
+retorno da API
+{
+	"id": 1,
+	"name": "Mousse de Maracujá",
+	"description": "Cremosa mousse de maracujá com base de biscoito.",
+	"price": 12.99,
+	"category": "Sobremesas",
+	"image": "https://static.itdg.com.br/images/1200-675/19903f5fde8b603c472469725008fd1f/shutterstock-1907121220.jpg",
+	"created_at": "2024-02-16 18:44:59",
+	"updated_at": "2024-02-16 18:44:59",
+	"ingredients": [
+		{
+			"id": 4,
+			"dish_id": 1,
+			"name": "Biscoito maizena"
+		},
+		{
+			"id": 3,
+			"dish_id": 1,
+			"name": "Creme de leite"
+		},
+		{
+			"id": 2,
+			"dish_id": 1,
+			"name": "Leite condensado"
+		},
+		{
+			"id": 1,
+			"dish_id": 1,
+			"name": "Suco de maracujá"
+		}
+	]
+}
+```
+
+delete
+```json
+/dishes/id
+exemplo: /dishes/1
+
+```
+### session
+
+create
+```json
+{
+  "email": "jhondoe@gmail.com",
+  "password": "123"
+}
+```
 
 
 <h2 id="colab">🤝 Colaboradores</h2>
@@ -105,4 +233,4 @@ Você pode contribuir com o projeto também!!
 
 <h2>📄 Licença <h2>
 
-O app **Food Explorer** é distribuída sob a licença MIT. Isso significa que você pode usar, modificar e distribuir o código desta API livremente, desde que inclua a declaração de direitos autorais e a licença MIT em qualquer cópia ou parte dela.
+<h4>O app **Food Explorer** é distribuída sob a licença MIT. Isso significa que você pode usar, modificar e distribuir o código desta API livremente, desde que inclua a declaração de direitos autorais e a licença MIT em qualquer cópia ou parte dela.</h4>
